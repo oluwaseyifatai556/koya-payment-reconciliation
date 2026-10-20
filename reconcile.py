@@ -28,7 +28,10 @@ count = 0
 
 for event in latest_by_txn.values():
     if event["status"] == "success":
-        total += float(event["amount"])
+        amount_raw = event["amount"]
+        if isinstance(amount_raw, str):
+            amount_raw = amount_raw.replace(",", "")
+        total += float(amount_raw)
         count += 1
 
 with open("expected.txt") as f:
